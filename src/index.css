@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "pixel";
+  src: url("font.ttf");
+}
+@font-face {
+  font-family: "pixelen";
+  src: url("fonten.ttf");
+}
+
+html {
+  background-color: #000;
+  color: white;
+  user-select: none;
+}
+.main {
+  background-color: #000;
+}
+.main .scroll {
+  position: relative;
+  z-index: 10;
+}
+.main .scroll .nav img {
+  height: 1.5rem;
+}
+.scroll .section {
+  font-family: "pixel";
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  margin: auto;
+}
+
+.moto {
+  font-family: "pixel";
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+}
+.moto em {
+  font-size: 2.5rem;
+  font-style: normal;
+}
+
+.force .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  text-align: left;
+}
+.force .container .item {
+  display: flex;
+}
+
+.force .container .item .title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.force .container .item .text {
+  width: 70%;
+}
+.force .container .item .text .info {
+  margin-left: 2rem;
+}
+.force .icon {
+  width: 6rem;
+  transform: translateY(-20%);
+}
+.scroll .footer {
+  font-family: "pixel";
+  margin-top: 8rem;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.scroll .footer .info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+}
+.footer .info .logo img {
+  height: 1.5rem;
+}
+.footer .info.followUs {
+  font-size: 2rem;
+}
+.threescene {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+

@@ -1,0 +1,29 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.37.0",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.1.1",
+    "vite-plugin-solid": "^2.5.0"
+  },
+  "dependencies": {
+    "@theatre/core": "^0.6.0",
+    "@theatre/studio": "^0.6.0",
+    "gsap": "npm:@gsap/shockingly@^3.11.5",
+    "scramble-text": "^0.0.8",
+    "scrambling-text": "^1.2.0",
+    "solid-js": "^1.6.10",
+    "three": "^0.151.3"
+  }
+}
