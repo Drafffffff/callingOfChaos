@@ -47,6 +47,12 @@ html {
   font-style: normal;
 }
 
+.moto p{
+  /* display:inline-block; */
+  /* line-height: 2 ; */
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  /* padding:0 1em; */
+}
 .force .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -78,6 +84,7 @@ html {
   padding: 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  background-color: #000;
 }
 .scroll .footer .info {
   display: flex;
@@ -99,4 +106,53 @@ html {
   left: 0;
   z-index: 0;
 }
-
+@media (max-width: 480px) {
+  .scroll .moto{
+    font-size: 1rem;
+  }
+  .scroll .moto em {
+    font-size: 1.5rem;
+  }
+  .scroll .force {
+    height: auto;
+  }
+  .force .container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+  .force .container .item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 3rem;
+  }
+  .force .container .item .text {
+    width: 100%;
+  }
+  .force .container .item .text .title {
+    font-size: 2rem;
+    margin-left: -1.3rem;
+    margin-top: 1em;
+  }
+  .force .container .item .text .info {
+    margin-left: 0;
+  }
+  .force .icon {
+    width: 7rem;
+    justify-self: center;
+    transform: translateY(0);
+  }
+  .scroll .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .scroll .footer .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+  }
+}

@@ -120,12 +120,12 @@ export default function Home() {
             <img src="/LOGO-w.svg" />
           </div>
           <div class="container">
-            <img class="h-20 m-auto" src="LOGO-g.svg" />
-            <h1 class="scramble text-[5rem] mt-6" ref={title}>
+            <img class="h-14 lg:h-20 m-auto" src="LOGO-g.svg" />
+            <h1 class="scramble  text-[2.5rem] lg:text-[5rem] mt-6" ref={title}>
               「混沌召唤」
             </h1>
-            <h2 class="scramble text-[4rem] tracking-widest">元宇宙潮流品牌</h2>
-            <h2 class="scramble text-[3rem] title-en">Calling of Chaos</h2>
+            <h2 class="scramble text-[2rem] lg:text-[4rem] tracking-widest">元宇宙潮流品牌</h2>
+            <h2 class="scramble text-[2rem] lg:text-[3rem] title-en">Calling Øf Chaos</h2>
           </div>
         </div>
         <div class="section moto">
@@ -148,8 +148,8 @@ export default function Home() {
         </div>
         <div class="section">
           <div className="container">
-            <img src="/LOGO-w.svg" class="h-12 mx-auto" />
-            <p class="text-5xl mt-10">「创造你的数字时尚」</p>
+            <img src="/LOGO-w.svg" class="h-10 lg:h-12 mx-auto" />
+            <p class="text-3xl lg:text-5xl mt-10">「创造你的数字时尚」</p>
           </div>
         </div>
         <div class="section">
