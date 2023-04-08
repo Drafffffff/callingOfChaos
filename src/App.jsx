@@ -2,13 +2,14 @@ import "./index.css";
 import { onCleanup, onMount } from "solid-js";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
 import ScrambleText from "scramble-text";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import studio from "@theatre/studio";
 import { getProject, types } from "@theatre/core";
-import projectState from "./coc.theatre-project-state.json"
+import projectState from "./coc.theatre-project-state.json";
+import ScrambleTextPlugin from "gsap/ScrambleTextPlugin";
+gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin);
 
 //a map function like p5
 const map = (value, start1, stop1, start2, stop2) => {
@@ -20,7 +21,7 @@ export default function Home() {
   let camera, scene, renderer;
   let threeContainer = null;
   const textureLoader = new THREE.TextureLoader();
-  const project = getProject("coc",{state:projectState});
+  const project = getProject("coc", { state: projectState });
   const sheet = project.sheet("coc");
   const scrambConfig = {
     timeOffset: 200,
@@ -86,27 +87,55 @@ export default function Home() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
+  let timmer = null;
   onMount(() => {
     if (import.meta.env.DEV) {
       studio.initialize();
     }
     threeInit();
     new ScrambleText(title, scrambConfig).start();
+    timmer = setInterval(() => {
+      new ScrambleText(title, scrambConfig).start();
+    }, 3000);
     window.addEventListener("resize", onWindowResize, false);
     animate();
+    //total scroll
+    const rootHeight = document.documentElement.scrollHeight;
     ScrollTrigger.create({
-      trigger: "html",
+      trigger: "#root",
       start: "top top",
-      end: "bottom bottom",
+      // endTrigger: ".footer",
+      end: `bottom bottom`,
+      scrub: 1,
       // markers: true,
       onUpdate: (self) => {
-        // console.log(self.progress);
+        console.log(self.progress);
         sheet.sequence.position = map(self.progress, 0, 1, 0, 4);
       },
+    });
+
+    //moto scrolltrigger
+    ScrollTrigger.create({
+      trigger: ".moto",
+      start: "top center-=150px",
+      end: "bottom bottom",
+      // markers: true,
+      pin: true,
+      pinSpacing: false,
+    });
+    //fashion scrolltrigger
+    ScrollTrigger.create({
+      trigger: ".fashion",
+      start: "top center-=100px",
+      end: "bottom bottom",
+      // markers: true,
+      pin: true,
+      pinSpacing: false,
     });
   });
 
   onCleanup(() => {
+    clearInterval(timmer);
     ScrollTrigger.getAll().forEach((trigger) => {
       trigger.kill();
     });
@@ -124,14 +153,18 @@ export default function Home() {
             <h1 class="scramble  text-[2.5rem] lg:text-[5rem] mt-6" ref={title}>
               「混沌召唤」
             </h1>
-            <h2 class="scramble text-[2rem] lg:text-[4rem] tracking-widest">元宇宙潮流品牌</h2>
-            <h2 class="scramble text-[2rem] lg:text-[3rem] title-en">Calling Øf Chaos</h2>
+            <h2 class="scramble text-[2rem] lg:text-[4rem] tracking-widest">
+              元宇宙潮流品牌
+            </h2>
+            <h2 class="scramble text-[2rem] lg:text-[3rem] title-en">
+              Calling Øf Chaos
+            </h2>
           </div>
         </div>
         <div class="section moto">
           <div class="container">
             <p>
-              CØC将是<em>「创世神」</em>的诞生之地
+              CØC将是<em id="strong">「创世神」</em>的诞生之地
             </p>
             <p>这里聚合了最具创造力的人类.</p>
             <p>创造，是我的底层基因。</p>
@@ -146,7 +179,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <div class="section">
+        <div class="section fashion">
           <div className="container">
             <img src="/LOGO-w.svg" class="h-10 lg:h-12 mx-auto" />
             <p class="text-3xl lg:text-5xl mt-10">「创造你的数字时尚」</p>

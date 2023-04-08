@@ -41,10 +41,16 @@ html {
   font-family: "pixel";
   font-size: 1.5rem;
   letter-spacing: 2px;
+  padding-bottom:300vh;
+  margin-bottom: 50vh;
 }
 .moto em {
   font-size: 2.5rem;
   font-style: normal;
+}
+.fashion{
+  padding-bottom: 300vh;
+  margin-bottom: 50vh;
 }
 
 .moto p{
@@ -146,6 +152,7 @@ html {
   }
   .scroll .footer {
     display: flex;
+    margin-top: 24rem;
     flex-direction: column;
     gap: 2rem;
   }
@@ -155,4 +162,5 @@ html {
     align-items: center;
     font-size: 1.4rem;
   }
+  
 }
