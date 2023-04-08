@@ -29,7 +29,6 @@ export default function Home() {
   function threeInit() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
-
     camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -51,8 +50,8 @@ export default function Home() {
       camera.position.z = v.position.z;
     });
     camera.lookAt(0, 0, 0);
-    const texture = textureLoader.load("matcap/1.png");
-    const loader = new GLTFLoader().setPath("model/");
+    const texture = textureLoader.load("/matcap/1.png");
+    const loader = new GLTFLoader().setPath("/model/");
     loader.load("scene.gltf", function (gltf) {
       const cylinder = gltf.scene.children[0].children.find((child) => {
         return child.name === "Cylinder";
@@ -118,7 +117,7 @@ export default function Home() {
       <div class="scroll">
         <div class="section title px-8 py-4">
           <div class="nav">
-            <img src="LOGO-w.svg" />
+            <img src="/LOGO-w.svg" />
           </div>
           <div class="container">
             <img class="h-20 m-auto" src="LOGO-g.svg" />
@@ -149,7 +148,7 @@ export default function Home() {
         </div>
         <div class="section">
           <div className="container">
-            <img src="LOGO-w.svg" class="h-12 mx-auto" />
+            <img src="/LOGO-w.svg" class="h-12 mx-auto" />
             <p class="text-5xl mt-10">「创造你的数字时尚」</p>
           </div>
         </div>
@@ -206,7 +205,7 @@ export default function Home() {
         </div>
         <div className="footer">
           <div class="info logo">
-            <img src="LOGO-w.svg" class="h-8" />
+            <img src="/LOGO-w.svg" class="h-8" />
           </div>
           <div class="info followUs text-3xl">Follow Us</div>
           <div class="info">
