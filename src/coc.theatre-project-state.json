@@ -1,0 +1,77 @@
+{
+  "sheetsById": {
+    "coc": {
+      "staticOverrides": {
+        "byObject": {
+          "camera": {
+            "position": {
+              "y": 9
+            }
+          }
+        }
+      },
+      "sequence": {
+        "subUnitsPerUnit": 30,
+        "length": 4,
+        "type": "PositionalSequence",
+        "tracksByObject": {
+          "camera": {
+            "trackData": {
+              "N48It9ujJu": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "camera:[\"position\",\"x\"]",
+                "keyframes": []
+              },
+              "dsRWh28aFm": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "camera:[\"position\",\"y\"]",
+                "keyframes": [
+                  {
+                    "id": "fL2zcaJFil",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.986,
+                      0.971
+                    ],
+                    "type": "bezier",
+                    "value": 9
+                  },
+                  {
+                    "id": "OT8_y2JpSJ",
+                    "position": 4,
+                    "connectedRight": true,
+                    "handles": [
+                      0.014,
+                      0.008,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -42
+                  }
+                ]
+              },
+              "swc_mk6q7c": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "camera:[\"position\",\"z\"]",
+                "keyframes": []
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"position\",\"x\"]": "N48It9ujJu",
+              "[\"position\",\"y\"]": "dsRWh28aFm",
+              "[\"position\",\"z\"]": "swc_mk6q7c"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitionVersion": "0.4.0",
+  "revisionHistory": [
+    "t9_CjfmnXt4iUo0N"
+  ]
+}

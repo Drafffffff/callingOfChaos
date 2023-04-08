@@ -8,6 +8,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import studio from "@theatre/studio";
 import { getProject, types } from "@theatre/core";
+import projectState from "./coc.theatre-project-state.json"
 
 //a map function like p5
 const map = (value, start1, stop1, start2, stop2) => {
@@ -19,7 +20,7 @@ export default function Home() {
   let camera, scene, renderer;
   let threeContainer = null;
   const textureLoader = new THREE.TextureLoader();
-  const project = getProject("coc");
+  const project = getProject("coc",{state:projectState});
   const sheet = project.sheet("coc");
   const scrambConfig = {
     timeOffset: 200,
@@ -87,7 +88,9 @@ export default function Home() {
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
   onMount(() => {
-    studio.initialize();
+    if (import.meta.env.DEV) {
+      studio.initialize();
+    }
     threeInit();
     new ScrambleText(title, scrambConfig).start();
     window.addEventListener("resize", onWindowResize, false);
@@ -99,7 +102,7 @@ export default function Home() {
       // markers: true,
       onUpdate: (self) => {
         // console.log(self.progress);
-        sheet.sequence.position  = map(self.progress, 0, 1, 0, 4);
+        sheet.sequence.position = map(self.progress, 0, 1, 0, 4);
       },
     });
   });
