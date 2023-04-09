@@ -292,7 +292,7 @@ export default function Home() {
     });
     ScrollTrigger.create({
       trigger: ".machine",
-      start: "top center-=200px",
+      start: "top center-=250px",
       end: "bottom bottom",
       // markers: true,
       pin: true,
@@ -356,13 +356,12 @@ export default function Home() {
         </div>
         <div class="section machine">
           <div class="container">
-            <div className="left"></div>
+            <div className="left">
+              <em>CØC混沌召唤</em>
+              Calling Øf Chaos
+            </div>
             <div className="right">
               <div className="content">
-                <em>CØC混沌召唤</em>
-                <br />
-                <br />
-                Calling Øf Chaos
                 <br />
                 由创造者主导的数字潮流组织，CØC使用最新的游戏引擎、NFT、区块链认证和XR拓展现实等技术，铸造连接虚拟现实的数字潮流产品矩阵和艺术品，创造Z时代的数字潮流生态。
               </div>
@@ -418,7 +417,7 @@ export default function Home() {
           </div>
         </div>
         <div className="footer">
-          <div class="info logo">
+          <div class="info logo ">
             <img src="/LOGO-w.svg" class="h-8" />
           </div>
           <div class="info followUs text-3xl">Follow Us</div>
@@ -432,7 +431,7 @@ export default function Home() {
           <div class="info">
             <img src="email.svg" />
             <div class="ml-3">
-              <a href="calllingofchaos@coc.space">@CallingOfChaos</a>
+              <a href="calllingofchaos@coc.space" class=" tracking-widest">calllingofchaos@coc.space</a>
             </div>
           </div>
         </div>

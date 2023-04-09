@@ -19,7 +19,7 @@ html {
   letter-spacing: 5px;
 }
 .scroll {
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
 }
 .main {
@@ -30,7 +30,7 @@ html {
   position: relative;
   z-index: 10;
   overflow-y: hidden;
-  width: 100vw;
+  width: 100%;
 }
 .main .scroll .nav img {
   height: 1.5rem;
@@ -44,7 +44,7 @@ html {
 .scroll .section {
   font-family: "pixel";
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   overflow-y: hidden;
   text-align: center;
   display: flex;
@@ -129,6 +129,8 @@ html {
 }
 .scroll .machine .left {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .scroll .machine .right {
@@ -139,13 +141,13 @@ html {
 }
 .scroll .machine .right .content {
   width: 80%;
-  transform: translateX(20%);
+  transform: translateX(50%);
 }
 .scroll .footer .info {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 .footer .info .logo img {
   height: 1.5rem;
@@ -155,7 +157,7 @@ html {
 }
 .threescene {
   position: fixed;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   top: 0;
   left: 0;
@@ -217,15 +219,21 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 1rem;
+  }
+  .scroll .machine {
+    margin-bottom:30vh;
   }
   .scroll .machine .container {
+    display: block;
     font-size: 1rem;
   }
   .scroll .machine .container .left {
+    padding: 0 2rem;
     flex: 0;
   }
   .scroll .machine .right .content {
+    margin-top:35vh;
     width: 100%;
     transform: translateX(0);
     padding: 0 2rem;
@@ -233,16 +241,16 @@ html {
   .scroll .machine {
     padding-bottom: 400vh;
   }
-.scroll .machine .container em {
-  font-size: 2.3rem;
-  font-weight: 800;
-  font-style: normal;
-  color: #1cee02;
-}
-.force .container {
+  .scroll .machine .container em {
+    font-size: 2.3rem;
+    font-weight: 800;
+    font-style: normal;
+    color: #1cee02;
+  }
+  .force .container {
     margin-bottom: 5rem;
   }
-  .force .container .item img{
+  .force .container .item img {
     width: 4rem;
   }
 }
