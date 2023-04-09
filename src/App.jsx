@@ -12,14 +12,6 @@ import studio from "@theatre/studio";
 import { getProject, types } from "@theatre/core";
 import projectState from "./coc.theatre-project-state.json";
 import ScrambleTextPlugin from "gsap/ScrambleTextPlugin";
-
-import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
-import { BloomPass } from "three/addons/postprocessing/BloomPass.js";
-import { AnaglyphEffect } from "three/addons/effects/AnaglyphEffect.js";
-import { RenderPixelatedPass } from "three/addons/postprocessing/RenderPixelatedPass.js";
-import { HorizontalBlurShader } from "three/addons/shaders/HorizontalBlurShader.js";
-import { VerticalBlurShader } from "three/addons/shaders/VerticalBlurShader.js";
-
 gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin);
 
 //a map function like p5
@@ -36,14 +28,15 @@ export default function Home() {
   const height = window.innerHeight || 2;
   let title = null;
   let camera,
+    machineGroup,
     scene,
     renderer,
     composer,
     ssrPass,
-    renderPixelPass,
-    renderScene,
     cocShell,
+    cocLogo,
     cocScreen;
+
   let whitePointLight, greenPointLight;
   let threeContainer = null;
   const textureLoader = new THREE.TextureLoader();
@@ -83,28 +76,53 @@ export default function Home() {
       color: 0x000000,
     });
     // spherePhysical.emissiveIntensity = 0.5;
+    const cocShellMatCap = textureLoader.load("/matcap/5.png");
+    const cocMaterial = new THREE.MeshMatcapMaterial({
+      matcap: cocShellMatCap,
+    });
+    //add video texture
+    const video = document.createElement("video");
+    video.crossOrigin = "anonymous";
+    video.src = "/texture/coc.mp4";
+    video.loop = true;
+    video.muted = true;
+    video.play();
+    const videoTexture = new THREE.VideoTexture(video);
+    // videoTexture.minFilter = THREE.LinearFilter;
+    // videoTexture.magFilter = THREE.LinearFilter;
+    // videoTexture.format = THREE.RGBFormat;
+    const videoMaterial = new THREE.MeshBasicMaterial({
+      map: videoTexture,
+    });
 
     const loader = new GLTFLoader().setPath("/model/");
     loader.load("scene.gltf", function (gltf) {
-      const sphere = gltf.scene.children.find((child) => {
-        return child.name === "球体002";
-      });
       const cylinder = gltf.scene.children.find((child) => {
         return child.name === "Cylinder";
       });
       cylinder.material = cylinderPhysical;
-      sphere.material = spherePhysical;
       scene.add(gltf.scene);
     });
+
+    machineGroup = new THREE.Group();
     const coc = loader.load("coc.gltf", function (gltf) {
-      console.log(gltf.scene.children)
+      console.log(gltf.scene.children);
       cocShell = gltf.scene.children.find((child) => {
-        return child.name === "machine_outshell";
+        return child.name === "machine_outershell";
       });
+      cocShell.material = cocMaterial;
       cocScreen = gltf.scene.children.find((child) => {
         return child.name === "machine_screen";
       });
-      scene.add(cocShell);
+      cocLogo = gltf.scene.children.find((child) => {
+        return child.name === "machine_outshell_coc";
+      });
+      //add to machineGroup
+      cocScreen.material = videoMaterial;
+      machineGroup.add(cocShell);
+      machineGroup.add(cocScreen);
+      machineGroup.add(cocLogo);
+      scene.add(machineGroup);
     });
 
     console.log(coc);
@@ -135,20 +153,16 @@ export default function Home() {
       caveRoughness: types.number(0.1, { range: [0, 1] }),
       pixelate: types.number(6, { range: [1, 30] }),
       cocPosition: types.compound({
-        x: types.number(0, { min: -10, max: 10 }),
-        y: types.number(0, { min: -10, max: 10 }),
-        z: types.number(0, { min: -10, max: 10 }),
+        x: types.number(0, { range: [-40, 10] }),
+        y: types.number(0, { range: [-40, 10] }),
+        z: types.number(0, { range: [-40, 10] }),
       }),
       cocRotation: types.compound({
-        x: types.number(0, { min: -10, max: 10 }),
-        y: types.number(0, { min: -10, max: 10 }),
-        z: types.number(0, { min: -10, max: 10 }),
+        x: types.number(0.1, { range: [-10, 10] }),
+        y: types.number(0.1, { range: [-10, 10] }),
+        z: types.number(0.1, { range: [-10, 10] }),
       }),
-      cocScale: types.compound({
-        x: types.number(0, { min: -10, max: 10 }),
-        y: types.number(0, { min: -10, max: 10 }),
-        z: types.number(0, { min: -10, max: 10 }),
-      }),
+      cocScale: types.number(1, { range: [0, 1] }),
     });
     cameraAnime.onValuesChange((v) => {
       camera.position.x = v.position.x;
@@ -156,15 +170,39 @@ export default function Home() {
       camera.position.z = v.position.z;
       cylinderPhysical.roughness = v.caveRoughness;
       if (cocShell) {
-        cocShell.position.x = v.cocPosition.x;
+        cocShell.position.x = v.cocPosition.x / 10;
         cocShell.position.y = v.cocPosition.y;
-        cocShell.position.z = v.cocPosition.z;
-        cocShell.rotation.x = v.cocRotation.x;
-        cocShell.rotation.y = v.cocRotation.y;
-        cocShell.rotation.z = v.cocRotation.z;
-        cocShell.scale.x = v.cocScale.x;
-        cocShell.scale.y = v.cocScale.y;
-        cocShell.scale.z = v.cocScale.z;
+        cocShell.position.z = v.cocPosition.z / 10;
+        cocShell.rotation.set(
+          v.cocRotation.x * Math.PI,
+          v.cocRotation.y * Math.PI,
+          v.cocRotation.z * Math.PI
+        );
+        cocShell.scale.x = v.cocScale;
+        cocShell.scale.y = v.cocScale;
+        cocShell.scale.z = v.cocScale;
+        cocLogo.position.x = v.cocPosition.x / 10;
+        cocLogo.position.y = v.cocPosition.y;
+        cocLogo.position.z = v.cocPosition.z / 10;
+        cocLogo.rotation.set(
+          v.cocRotation.x * Math.PI,
+          v.cocRotation.y * Math.PI,
+          v.cocRotation.z * Math.PI
+        );
+        cocLogo.scale.x = v.cocScale;
+        cocLogo.scale.y = v.cocScale;
+        cocLogo.scale.z = v.cocScale;
+        cocScreen.position.x = v.cocPosition.x / 10;
+        cocScreen.position.y = v.cocPosition.y;
+        cocScreen.position.z = v.cocPosition.z / 10;
+        cocScreen.rotation.set(
+          v.cocRotation.x * Math.PI,
+          v.cocRotation.y * Math.PI,
+          v.cocRotation.z * Math.PI
+        );
+        cocScreen.scale.x = v.cocScale;
+        cocScreen.scale.y = v.cocScale;
+        cocScreen.scale.z = v.cocScale;
       }
     });
   }
@@ -252,10 +290,9 @@ export default function Home() {
       pin: true,
       pinSpacing: false,
     });
-    //force scrolltrigger
     ScrollTrigger.create({
-      trigger: ".force",
-      start: "top center-=100px",
+      trigger: ".machine",
+      start: "top center-=200px",
       end: "bottom bottom",
       // markers: true,
       pin: true,
@@ -279,13 +316,16 @@ export default function Home() {
           </div>
           <div class="container">
             <img class="h-14 lg:h-20 m-auto" src="LOGO-g.svg" />
-            <h1 class="scramble  text-[2.5rem] lg:text-[5rem] mt-6" ref={title}>
+            <h1
+              class="scramble mb-3  text-[2rem] lg:text-[5rem] mt-6"
+              ref={title}
+            >
               「混沌召唤」
             </h1>
-            <h2 class="scramble text-[2rem] lg:text-[4rem]  ">
+            <h2 class="scramble text-[1rem] lg:text-[4rem]  ">
               元宇宙潮流品牌
             </h2>
-            <h2 class="scramble text-[2rem] lg:text-[3rem] title-en title-en">
+            <h2 class="scramble text-[1rem] lg:text-[3rem] title-en title-en">
               Calling Øf Chaos
             </h2>
           </div>
@@ -314,8 +354,20 @@ export default function Home() {
             <p class="text-3xl lg:text-5xl mt-10">「创造你的数字时尚」</p>
           </div>
         </div>
-        <div class="section">
-          <h1>召唤器</h1>
+        <div class="section machine">
+          <div class="container">
+            <div className="left"></div>
+            <div className="right">
+              <div className="content">
+                <em>CØC混沌召唤</em>
+                <br />
+                <br />
+                Calling Øf Chaos
+                <br />
+                由创造者主导的数字潮流组织，CØC使用最新的游戏引擎、NFT、区块链认证和XR拓展现实等技术，铸造连接虚拟现实的数字潮流产品矩阵和艺术品，创造Z时代的数字潮流生态。
+              </div>
+            </div>
+          </div>
         </div>
         <div class="section force">
           <div class="container">

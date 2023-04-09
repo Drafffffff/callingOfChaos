@@ -16,10 +16,9 @@ html {
   color: white;
   user-select: none;
   width: 100vw;
-  letter-spacing:5px;
+  letter-spacing: 5px;
 }
 .scroll {
-  
   width: 100vw;
   overflow: hidden;
 }
@@ -30,14 +29,16 @@ html {
   background-color: rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 10;
+  overflow-y: hidden;
+  width: 100vw;
 }
 .main .scroll .nav img {
   height: 1.5rem;
 }
-.scroll .section.title{
+.scroll .section.title {
   letter-spacing: 2rem;
 }
-.scroll .section.title .title-en{
+.scroll .section.title .title-en {
   letter-spacing: 1rem;
 }
 .scroll .section {
@@ -67,7 +68,7 @@ html {
 }
 .fashion {
   padding-bottom: 300vh;
-  margin-bottom: 50vh;
+  margin-bottom: 10vh;
 }
 
 .moto p {
@@ -82,6 +83,7 @@ html {
   grid-template-columns: 1fr 1fr;
   gap: 8rem;
   text-align: left;
+  margin-bottom: 30rem;
 }
 .force .container .item {
   display: flex;
@@ -110,6 +112,35 @@ html {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   background-color: #000;
 }
+.scroll .machine {
+  padding-bottom: 400vh;
+}
+.scroll .machine .container {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  text-align: left;
+}
+.scroll .machine .container em {
+  font-size: 3rem;
+  font-weight: 800;
+  font-style: normal;
+  color: #1cee02;
+}
+.scroll .machine .left {
+  flex: 1;
+}
+
+.scroll .machine .right {
+  flex: 1;
+  padding: 0 0rem;
+  display: flex;
+  /* justify-content: flex-end; */
+}
+.scroll .machine .right .content {
+  width: 80%;
+  transform: translateX(20%);
+}
 .scroll .footer .info {
   display: flex;
   justify-content: center;
@@ -131,6 +162,13 @@ html {
   z-index: 0;
 }
 @media (max-width: 480px) {
+  .scroll .section.title {
+    font-size: 1rem;
+    letter-spacing: 1rem;
+  }
+  .scroll .section.title .title-en {
+    letter-spacing: 0.2rem;
+  }
   .scroll .moto {
     font-size: 1rem;
   }
@@ -138,6 +176,7 @@ html {
     font-size: 1.5rem;
   }
   .scroll .force {
+    /* padding-bottom: 100vh; */
     height: auto;
   }
   .force .container {
@@ -179,5 +218,31 @@ html {
     justify-content: center;
     align-items: center;
     font-size: 1.4rem;
+  }
+  .scroll .machine .container {
+    font-size: 1rem;
+  }
+  .scroll .machine .container .left {
+    flex: 0;
+  }
+  .scroll .machine .right .content {
+    width: 100%;
+    transform: translateX(0);
+    padding: 0 2rem;
+  }
+  .scroll .machine {
+    padding-bottom: 400vh;
+  }
+.scroll .machine .container em {
+  font-size: 2.3rem;
+  font-weight: 800;
+  font-style: normal;
+  color: #1cee02;
+}
+.force .container {
+    margin-bottom: 5rem;
+  }
+  .force .container .item img{
+    width: 4rem;
   }
 }
