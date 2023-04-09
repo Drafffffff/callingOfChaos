@@ -16,6 +16,7 @@ html {
   color: white;
   user-select: none;
   width: 100vw;
+  letter-spacing:5px;
 }
 .scroll {
   
@@ -32,6 +33,12 @@ html {
 }
 .main .scroll .nav img {
   height: 1.5rem;
+}
+.scroll .section.title{
+  letter-spacing: 2rem;
+}
+.scroll .section.title .title-en{
+  letter-spacing: 1rem;
 }
 .scroll .section {
   font-family: "pixel";
@@ -64,6 +71,7 @@ html {
 }
 
 .moto p {
+  @apply mt-5;
   /* display:inline-block; */
   /* line-height: 2 ; */
   /* background-color: rgba(0, 0, 0, 0.3); */

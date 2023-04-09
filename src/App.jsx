@@ -35,7 +35,15 @@ export default function Home() {
   const width = window.innerWidth || 2;
   const height = window.innerHeight || 2;
   let title = null;
-  let camera, scene, renderer, composer, ssrPass, renderPixelPass, renderScene;
+  let camera,
+    scene,
+    renderer,
+    composer,
+    ssrPass,
+    renderPixelPass,
+    renderScene,
+    cocShell,
+    cocScreen;
   let whitePointLight, greenPointLight;
   let threeContainer = null;
   const textureLoader = new THREE.TextureLoader();
@@ -71,10 +79,8 @@ export default function Home() {
       roughness: 0.1, // 粗糙度为0，表示非常光滑
     });
     camera.lookAt(0, -50, 0);
-    const sphereMap = textureLoader.load("/texture/spheremap.png");
     const spherePhysical = new THREE.MeshBasicMaterial({
       color: 0x000000,
-      // map: sphereMap,
     });
     // spherePhysical.emissiveIntensity = 0.5;
 
@@ -86,13 +92,25 @@ export default function Home() {
       const cylinder = gltf.scene.children.find((child) => {
         return child.name === "Cylinder";
       });
-      console.log(sphere);
       cylinder.material = cylinderPhysical;
       sphere.material = spherePhysical;
       scene.add(gltf.scene);
     });
+    const coc = loader.load("coc.gltf", function (gltf) {
+      console.log(gltf.scene.children)
+      cocShell = gltf.scene.children.find((child) => {
+        return child.name === "machine_outshell";
+      });
+      cocScreen = gltf.scene.children.find((child) => {
+        return child.name === "machine_screen";
+      });
+      scene.add(cocShell);
+    });
+
+    console.log(coc);
+
     renderer = new THREE.WebGLRenderer();
-    renderer.setPixelRatio(window.devicePixelRatio);
+    // renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     threeContainer.appendChild(renderer.domElement);
     // composer
@@ -104,10 +122,9 @@ export default function Home() {
       width: innerWidth,
       height: innerHeight,
     });
-
-    // const glitchPass = new GlitchPass();
-    // composer.addPass(glitchPass);
+    const glitchPass = new GlitchPass();
     composer.addPass(ssrPass);
+    // composer.addPass(glitchPass);
     //theatre anime
     const cameraAnime = sheet.object("camera", {
       position: types.compound({
@@ -117,12 +134,38 @@ export default function Home() {
       }),
       caveRoughness: types.number(0.1, { range: [0, 1] }),
       pixelate: types.number(6, { range: [1, 30] }),
+      cocPosition: types.compound({
+        x: types.number(0, { min: -10, max: 10 }),
+        y: types.number(0, { min: -10, max: 10 }),
+        z: types.number(0, { min: -10, max: 10 }),
+      }),
+      cocRotation: types.compound({
+        x: types.number(0, { min: -10, max: 10 }),
+        y: types.number(0, { min: -10, max: 10 }),
+        z: types.number(0, { min: -10, max: 10 }),
+      }),
+      cocScale: types.compound({
+        x: types.number(0, { min: -10, max: 10 }),
+        y: types.number(0, { min: -10, max: 10 }),
+        z: types.number(0, { min: -10, max: 10 }),
+      }),
     });
     cameraAnime.onValuesChange((v) => {
       camera.position.x = v.position.x;
       camera.position.y = v.position.y;
       camera.position.z = v.position.z;
       cylinderPhysical.roughness = v.caveRoughness;
+      if (cocShell) {
+        cocShell.position.x = v.cocPosition.x;
+        cocShell.position.y = v.cocPosition.y;
+        cocShell.position.z = v.cocPosition.z;
+        cocShell.rotation.x = v.cocRotation.x;
+        cocShell.rotation.y = v.cocRotation.y;
+        cocShell.rotation.z = v.cocRotation.z;
+        cocShell.scale.x = v.cocScale.x;
+        cocShell.scale.y = v.cocScale.y;
+        cocShell.scale.z = v.cocScale.z;
+      }
     });
   }
 
@@ -194,7 +237,7 @@ export default function Home() {
     //moto scrolltrigger
     ScrollTrigger.create({
       trigger: ".moto",
-      start: "top center-=150px",
+      start: "top center-=300px",
       end: "bottom bottom",
       // markers: true,
       pin: true,
@@ -203,6 +246,15 @@ export default function Home() {
     //fashion scrolltrigger
     ScrollTrigger.create({
       trigger: ".fashion",
+      start: "top center-=100px",
+      end: "bottom bottom",
+      // markers: true,
+      pin: true,
+      pinSpacing: false,
+    });
+    //force scrolltrigger
+    ScrollTrigger.create({
+      trigger: ".force",
       start: "top center-=100px",
       end: "bottom bottom",
       // markers: true,
@@ -230,10 +282,10 @@ export default function Home() {
             <h1 class="scramble  text-[2.5rem] lg:text-[5rem] mt-6" ref={title}>
               「混沌召唤」
             </h1>
-            <h2 class="scramble text-[2rem] lg:text-[4rem] tracking-widest">
+            <h2 class="scramble text-[2rem] lg:text-[4rem]  ">
               元宇宙潮流品牌
             </h2>
-            <h2 class="scramble text-[2rem] lg:text-[3rem] title-en">
+            <h2 class="scramble text-[2rem] lg:text-[3rem] title-en title-en">
               Calling Øf Chaos
             </h2>
           </div>
